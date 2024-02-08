@@ -1,0 +1,144 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: userservices
+spec:
+  selector:
+    app: userservices
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP   # Change to ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userservices
+  template:
+    metadata:
+      labels:
+        app: userservices
+    spec:
+      containers:
+        - name: userservices
+          image: umang2001/blogapplication:userImage
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blogservices
+spec:
+  selector:
+    app: blogservices
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8080
+  type: ClusterIP   # Change to ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blogservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blogservices
+  template:
+    metadata:
+      labels:
+        app: blogservices
+    spec:
+      containers:
+        - name: blogservices
+          image: umang2001/blogapplication:blogImage
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: commentservices
+spec:
+  selector:
+    app: commentservices
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8080
+  type: ClusterIP   # Change to ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: commentservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: commentservices
+  template:
+    metadata:
+      labels:
+        app: commentservices
+    spec:
+      containers:
+        - name: commentservices
+          image: umang2001/blogapplication:commentImage
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: imageservices
+spec:
+  selector:
+    app: imageservices
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8080
+  type: ClusterIP   # Change to ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imageservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imageservices
+  template:
+    metadata:
+      labels:
+        app: imageservices
+    spec:
+      containers:
+        - name: imageservices
+          image: umang2001/blogapplication:imageImage
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+

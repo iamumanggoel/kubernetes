@@ -1,0 +1,39 @@
+# frontend.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontendservices
+  name: frontendservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontendservices
+  template:
+    metadata:
+      labels:
+        app: frontendservices
+    spec:
+      containers:
+      - image: darkgod1800/itcfinalproject:frontendimage
+        name: frontendservices
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: frontendservices
+  name: frontendservices
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: frontendservices
+  type: ClusterIP
+
