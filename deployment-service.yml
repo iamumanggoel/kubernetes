@@ -1,6 +1,46 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      priorityClassName: high-priority  # Set a priority class for the pod
+      containers:
+        - name: postgres
+          image: umang2001/blogapplication:postgresimage
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: BlogDb
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: userservices
 spec:
   selector:
@@ -27,7 +67,7 @@ spec:
     spec:
       containers:
         - name: userservices
-          image: umang2001/blogapplication:userImage
+          image: umang2001/blogapplication:userimage
           ports:
             - containerPort: 8080
           env:
@@ -63,7 +103,7 @@ spec:
     spec:
       containers:
         - name: blogservices
-          image: umang2001/blogapplication:blogImage
+          image: umang2001/blogapplication:blogimage
           ports:
             - containerPort: 8080
           env:
@@ -99,7 +139,7 @@ spec:
     spec:
       containers:
         - name: commentservices
-          image: umang2001/blogapplication:commentImage
+          image: umang2001/blogapplication:commentimage
           ports:
             - containerPort: 8080
           env:
@@ -135,10 +175,56 @@ spec:
     spec:
       containers:
         - name: imageservices
-          image: umang2001/blogapplication:imageImage
+          image: umang2001/blogapplication:imageimage
           ports:
             - containerPort: 8080
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontendservices
+spec:
+  selector:
+    app: frontendservices
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontendservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontendservices
+  template:
+    metadata:
+      labels:
+        app: frontendservices
+    spec:
+      containers:
+        - name: frontendservices
+          image: umang2001/blogapplication:frontendimage
+          ports:
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000000
+globalDefault: false
+description: "This priority class has a higher priority"
 

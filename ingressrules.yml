@@ -5,44 +5,54 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: gaurav-user.itcblogs.xyz
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: userservices   # Update the service name to match your Kubernetes service
-            port:
-              number: 8080       # Update the port number if needed
-  - host: gaurav-blog.itcblogs.xyz
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: blogservices   # Update the service name to match your Kubernetes service
-            port:
-              number: 8080       # Update the port number if needed
-  - host: gaurav-image.itcblogs.xyz
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: imageservices   # Update the service name to match your Kubernetes service
-            port:
-              number: 8080        # Update the port number if needed
-  - host: gaurav-comment.itcblogs.xyz
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: commentservices   # Update the service name to match your Kubernetes service
-            port:
-              number: 8080        # Update the port number if needed
+    - host: umang-user.itcblogs.xyz
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: userservices   # Update the service name to match your Kubernetes service
+                port:
+                  number: 8080       # Update the port number if needed
+    - host: umang-blog.itcblogs.xyz
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: blogservices   # Update the service name to match your Kubernetes service
+                port:
+                  number: 8080       # Update the port number if needed
+    - host: umang-image.itcblogs.xyz
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: imageservices   # Update the service name to match your Kubernetes service
+                port:
+                  number: 8080        # Update the port number if needed
+    - host: umang-comment.itcblogs.xyz
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: commentservices   # Update the service name to match your Kubernetes service
+                port:
+                  number: 8080        # Update the port number if needed
+    - host: umang-frontend.itcblogs.xyz
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: frontendservices   # Update the service name to match your Kubernetes service
+                port:
+                  number: 80        # Update the port number if needed
 
