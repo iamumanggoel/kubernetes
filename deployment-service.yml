@@ -24,7 +24,7 @@ spec:
       labels:
         app: postgres
     spec:
-      priorityClassName: high-priority  # Set a priority class for the pod
+      priorityClassName: high-priority
       containers:
         - name: postgres
           image: umang2001/blogapplication:postgresimage
@@ -49,7 +49,7 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-  type: ClusterIP   # Change to ClusterIP
+  type: ClusterIP   
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -85,7 +85,7 @@ spec:
     - protocol: TCP
       port: 8081
       targetPort: 8080
-  type: ClusterIP   # Change to ClusterIP
+  type: ClusterIP  
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -121,7 +121,7 @@ spec:
     - protocol: TCP
       port: 8082
       targetPort: 8080
-  type: ClusterIP   # Change to ClusterIP
+  type: ClusterIP 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -157,7 +157,7 @@ spec:
     - protocol: TCP
       port: 8083
       targetPort: 8080
-  type: ClusterIP   # Change to ClusterIP
+  type: ClusterIP 
 ---
 apiVersion: apps/v1
 kind: Deployment
